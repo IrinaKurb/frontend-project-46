@@ -15,7 +15,9 @@ const genDiff = (path1, path2) => {
   const getDataFile2 = fs.readFileSync(pathFile2);
   const parsedFile1 = parse(getDataFile1, getTypeOfFile(path1));
   const parsedFile2 = parse(getDataFile2, getTypeOfFile(path2));
-  console.log(compare(parsedFile1, parsedFile2));
+  const result = compare(parsedFile1, parsedFile2);
+  console.log(result);
+  return result;
 };
 
 export default genDiff;
