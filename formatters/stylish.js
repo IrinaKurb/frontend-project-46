@@ -1,6 +1,5 @@
 import _ from 'lodash';
-
-const [changedVal, notChangedVal, addVal, deletedVal, nested] = ['changedVal', 'notChangedVal', 'addVal', 'deleted', 'nested'];
+import * as types from './typesOfObjects.js';
 
 const indentSpecial = (depth) => {
   const replacer = ' ';
@@ -36,26 +35,21 @@ const stringify = (val, dep) => {
 const stylish = (tree) => {
   const iter = (data, depth) => {
     const valToStr = data.map((element) => {
-      const elKey = element.key;
-      const elValue = element.value;
-      const elType = element.type;
+      const { key, value, type } = element;
 
-      const elData1 = elValue[0];
-      const elData2 = elValue[1];
-
-      switch (elType) {
-        case addVal:
-          return (`${indentSpecial(depth)}+ ${elKey}: ${stringify(elValue, depth)}`);
-        case deletedVal:
-          return (`${indentSpecial(depth)}- ${elKey}: ${stringify(elValue, depth)}`);
-        case changedVal:
-          return ([`${indentSpecial(depth)}${[`- ${elKey}: ${stringify(elData1, depth)}`]}\n${[`${indentSpecial(depth)}+ ${elKey}: ${stringify(elData2, depth)}`]}`]);
-        case notChangedVal:
-          return (`${indentSpecial(depth)}  ${elKey}: ${stringify(elValue, depth)}`);
-        case nested:
-          return (`${indentSpecial(depth)}  ${elKey}: ${iter(elValue, depth + 1)}`);
+      switch (type) {
+        case types.addVal:
+          return (`${indentSpecial(depth)}+ ${key}: ${stringify(value, depth)}`);
+        case types.deletedVal:
+          return (`${indentSpecial(depth)}- ${key}: ${stringify(value, depth)}`);
+        case types.changedVal:
+          return ([`${indentSpecial(depth)}${[`- ${key}: ${stringify(value[0], depth)}`]}\n${[`${indentSpecial(depth)}+ ${key}: ${stringify(value[1], depth)}`]}`]);
+        case types.notChangedVal:
+          return (`${indentSpecial(depth)}  ${key}: ${stringify(value, depth)}`);
+        case types.nested:
+          return (`${indentSpecial(depth)}  ${key}: ${iter(value, depth + 1)}`);
         default:
-          throw new Error(`Type ${elType} is not defined`);
+          throw new Error(`Type ${type} is not defined`);
       }
     });
     const result = valToStr.join('\n');

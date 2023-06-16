@@ -1,7 +1,6 @@
 import _ from 'lodash';
-import stylish from './stylish.js';
-
-const [changedVal, notChangedVal, addVal, deletedVal, nested] = ['changedVal', 'notChangedVal', 'addVal', 'deleted', 'nested'];
+import stylish from '../formatters/stylish.js';
+import * as types from '../formatters/typesOfObjects.js';
 
 const compare = (data1, data2, format = stylish) => {
   const keysData1 = Object.keys(data1);
@@ -13,19 +12,20 @@ const compare = (data1, data2, format = stylish) => {
     const valueData2 = data2[element];
 
     if (_.isObject(valueData1) && _.isObject(valueData2)) {
-      return acc.concat({ key: element, value: compare(valueData1, valueData2), type: nested });
+      return acc
+        .concat({ key: element, value: compare(valueData1, valueData2), type: types.nested });
     }
     if (Object.hasOwn(data2, element) && Object.hasOwn(data1, element)) {
       if (valueData1 === valueData2) {
-        return acc.concat({ key: element, value: valueData1, type: notChangedVal });
+        return acc.concat({ key: element, value: valueData1, type: types.notChangedVal });
       }
-      return acc.concat({ key: element, value: [valueData1, valueData2], type: changedVal });
+      return acc.concat({ key: element, value: [valueData1, valueData2], type: types.changedVal });
     }
     if (Object.hasOwn(data1, element) && !Object.hasOwn(data2, element)) {
-      return acc.concat({ key: element, value: valueData1, type: deletedVal });
+      return acc.concat({ key: element, value: valueData1, type: types.deletedVal });
     }
     if (!Object.hasOwn(data1, element) && Object.hasOwn(data2, element)) {
-      return acc.concat({ key: element, value: valueData2, type: addVal });
+      return acc.concat({ key: element, value: valueData2, type: types.addVal });
     }
     return format(acc);
   }, []);
