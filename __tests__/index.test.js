@@ -34,6 +34,18 @@ test('genDiffYmlFile_plainFormat', () => {
   expect(current).toEqual(expected);
 });
 
+test('genDiffJSONFile_JSONFormat', () => {
+  const current = genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'json');
+  const expected = readFile('expectedJSONStr.txt');
+  expect(current).toEqual(expected);
+});
+
+test('genDiffYmlFile_JSONFormat', () => {
+  const current = genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yml'), 'json');
+  const expected = readFile('expectedJSONStr.txt');
+  expect(current).toEqual(expected);
+});
+
 test('checkUnexpectedFormat', () => {
   expect(() => genDiff(getFixturePath('errorFile.txt'), getFixturePath('file2.yml'))).toThrow(Error);
 });
