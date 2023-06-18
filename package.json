@@ -6,7 +6,7 @@
     "testEnvironment": "node",
     "transform": {}
   },
-  "description": "Program helps to compare two configuration files and shows a difference",
+  "description": "The program helps to compare two configuration files and shows the difference between them.",
   "main": "interfaceFunct.js",
   "scripts": {
     "test": "jest"
