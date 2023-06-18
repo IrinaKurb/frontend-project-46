@@ -4,9 +4,10 @@ import * as types from '../formatters/typesOfObjects.js';
 const compare = (data1, data2) => {
   const keysData1 = Object.keys(data1);
   const keysData2 = Object.keys(data2);
-  const allKeys = _.union(keysData1, keysData2).sort();
+  const allKeys = _.union(keysData1, keysData2);
+  const sortedKeys = [...allKeys].sort();
 
-  const compareFiles = allKeys.reduce((acc, eachKey) => {
+  const compareFiles = sortedKeys.reduce((acc, eachKey) => {
     const valueData1 = data1[eachKey];
     const valueData2 = data2[eachKey];
 

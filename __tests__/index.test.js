@@ -50,10 +50,10 @@ test('checkUnexpectedFormat', () => {
   expect(() => genDiff(getFixturePath('errorFile.txt'), getFixturePath('file2.yml'))).toThrow(Error);
 });
 
-test('checkUnexpectedTypeElement', () => {
+test('checkUnexpectedTypeElement1', () => {
   expect(() => stylish([{ key: 'element', value: 'valueData2', type: 'errorType' }])).toThrow(Error);
 });
 
-test('checkUnexpectedTypeElement', () => {
+test('checkUnexpectedTypeElement2', () => {
   expect(() => plain([{ key: 'element', value: 'valueData2', type: 'errorType' }])).toThrow(Error);
 });
