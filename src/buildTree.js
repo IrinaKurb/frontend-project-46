@@ -26,10 +26,7 @@ const compare = (data1, data2) => {
       return acc
         .concat({ key: eachKey, value: valueData1, type: types.deletedVal });
     }
-    if (!Object.hasOwn(data1, eachKey) && Object.hasOwn(data2, eachKey)) {
-      return acc.concat({ key: eachKey, value: valueData2, type: types.addVal });
-    }
-    return acc;
+    return acc.concat({ key: eachKey, value: valueData2, type: types.addVal });
   }, []);
   return compareFiles;
 };
