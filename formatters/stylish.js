@@ -35,21 +35,19 @@ const stringify = (val, dep) => {
 const stylish = (tree) => {
   const iter = (data, depth) => {
     const valToStr = data.map((element) => {
-      const { key, value, type } = element;
-
-      switch (type) {
+      switch (element.type) {
         case types.addVal:
-          return (`${indentSpecial(depth)}+ ${key}: ${stringify(value, depth)}`);
+          return (`${indentSpecial(depth)}+ ${element.key}: ${stringify(element.value, depth)}`);
         case types.deletedVal:
-          return (`${indentSpecial(depth)}- ${key}: ${stringify(value, depth)}`);
+          return (`${indentSpecial(depth)}- ${element.key}: ${stringify(element.value, depth)}`);
         case types.changedVal:
-          return ([`${indentSpecial(depth)}${[`- ${key}: ${stringify(value[0], depth)}`]}\n${[`${indentSpecial(depth)}+ ${key}: ${stringify(value[1], depth)}`]}`]);
+          return ([`${indentSpecial(depth)}${[`- ${element.key}: ${stringify(element.value[0], depth)}`]}\n${[`${indentSpecial(depth)}+ ${element.key}: ${stringify(element.value[1], depth)}`]}`]);
         case types.notChangedVal:
-          return (`${indentSpecial(depth)}  ${key}: ${stringify(value, depth)}`);
+          return (`${indentSpecial(depth)}  ${element.key}: ${stringify(element.value, depth)}`);
         case types.nested:
-          return (`${indentSpecial(depth)}  ${key}: ${iter(value, depth + 1)}`);
+          return (`${indentSpecial(depth)}  ${element.key}: ${iter(element.children, depth + 1)}`);
         default:
-          throw new Error(`Type ${type} is not defined`);
+          throw new Error(`Type ${element.type} is not defined`);
       }
     });
     const result = valToStr.join('\n');

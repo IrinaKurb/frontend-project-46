@@ -12,24 +12,23 @@ const valToStr = (elValue) => {
 };
 
 const plain = (tree) => {
-  const iter = (element, elKey) => {
-    const itemToPlain = element.flatMap((item) => {
-      const { key, value, type } = item;
-      const path = elKey.concat(key);
+  const iter = (items, elKey) => {
+    const itemToPlain = items.map((element) => {
+      const path = elKey.concat(element.key);
       const joinPath = path.join('.');
-      switch (type) {
+      switch (element.type) {
         case types.addVal:
-          return `Property '${joinPath}' was added with value: ${valToStr(value)}`;
+          return `Property '${joinPath}' was added with value: ${valToStr(element.value)}`;
         case types.deletedVal:
           return `Property '${joinPath}' was removed`;
         case types.changedVal:
-          return `Property '${joinPath}' was updated. From ${valToStr(value[0])} to ${valToStr(value[1])}`;
+          return `Property '${joinPath}' was updated. From ${valToStr(element.value[0])} to ${valToStr(element.value[1])}`;
         case types.nested:
-          return iter(value, path);
+          return iter(element.children, path);
         case types.notChangedVal:
           return null;
         default:
-          throw new Error(`Type ${type} is not defined`);
+          throw new Error(`Type ${element.type} is not defined`);
       }
     });
     const plainObj = _.remove(itemToPlain, null);
