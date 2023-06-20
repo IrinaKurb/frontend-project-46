@@ -6,7 +6,8 @@ import parse from './parsers.js';
 import compare from './buildTree.js';
 import selectFormat from '../formatters/index.js';
 
-const getPathFile = (filePath) => path.resolve(filePath);
+const getPathToWorkDir = () => process.cwd();
+const getPathFile = (filePath) => path.resolve(getPathToWorkDir(), filePath);
 const getTypeOfFile = (filePath) => path.extname(filePath).slice(1);
 const getDataFile = (filePath) => fs.readFileSync(filePath, 'utf-8');
 

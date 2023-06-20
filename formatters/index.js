@@ -1,6 +1,5 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
-import json from './json.js';
 
 const selectFormat = (data, format = 'stylish') => {
   switch (format) {
@@ -9,7 +8,7 @@ const selectFormat = (data, format = 'stylish') => {
     case 'plain':
       return plain(data);
     case 'json':
-      return json(data);
+      return JSON.stringify(data);
     default:
       throw new Error(`Format ${format} is not defined`);
   }
