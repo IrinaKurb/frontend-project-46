@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import * as types from './typesOfObjects.js';
 
 const valToStr = (elValue) => {
   if (!_.isObject(elValue) || Array.isArray(elValue)) {
@@ -17,15 +16,15 @@ const plain = (tree) => {
       const path = elKey.concat(element.key);
       const joinPath = path.join('.');
       switch (element.type) {
-        case types.addVal:
+        case 'addVal':
           return `Property '${joinPath}' was added with value: ${valToStr(element.value)}`;
-        case types.deletedVal:
+        case 'deletedVal':
           return `Property '${joinPath}' was removed`;
-        case types.changedVal:
+        case 'changedVal':
           return `Property '${joinPath}' was updated. From ${valToStr(element.value[0])} to ${valToStr(element.value[1])}`;
-        case types.nested:
+        case 'nested':
           return iter(element.children, path);
-        case types.notChangedVal:
+        case 'notChangedVal':
           return null;
         default:
           throw new Error(`Type ${element.type} is not defined`);
