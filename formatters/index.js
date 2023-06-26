@@ -1,7 +1,7 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
 
-const selectFormat = (data, format = 'stylish') => {
+const selectorOfFormat = (data, format = 'stylish') => {
   switch (format) {
     case 'stylish':
       return stylish(data);
@@ -13,4 +13,4 @@ const selectFormat = (data, format = 'stylish') => {
       throw new Error(`Format ${format} is not defined`);
   }
 };
-export default selectFormat;
+export default selectorOfFormat;
